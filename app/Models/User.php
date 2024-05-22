@@ -20,19 +20,33 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(emailVerification::class);
     }
+    public function markEmailAsVerified()
+    {
+        if (!is_null($this->verified_at)) {
+            return true;
+        }
+
+        $this->forceFill([
+            'verified_at' => $this->freshTimestamp(),
+        ])->save();
+
+        return true;
+    }
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'agree_terms_conditions',
-    ];
+    // protected $fillable = [
+    //     'first_name',
+    //     'last_name',
+    //     'email',
+    //     'password',
+    //     'agree_terms_conditions',
+    // ];
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,7 +64,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

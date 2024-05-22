@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('email_verification', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->after('id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone_number')->nullable()->unique();
+            $table->string('home_address')->nullable();
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('email_verification', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('phone_number');
         });
     }
 };

@@ -10,7 +10,7 @@ class emailVerification extends Model
 {
     use HasFactory;
     protected $table = "email_verification";
-    // protected $gaurd = ['id'];
+    // protected $gaurded = ['id'];
     protected $fillable = ['user_id', 'token', 'verified_at'];
 
     public function user()

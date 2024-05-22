@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('email_verification', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('token');
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();

@@ -40,8 +40,13 @@ class AuthController extends Controller
         $token = $user->createToken('main')->plainTextToken;
 
         EmailVerificationService::sendVerificationEmail($user);
+
+        $userVerfied =
+            User::find($user->id);
+
         return response([
             'user' => $user,
+            'verified' => $userVerfied,
             'message' => 'User Created Successfully',
             'token' => $token
         ]);
