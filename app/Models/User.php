@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\ShippingAddress;
 use App\Models\emailVerification;
-use Laravel\Sanctum\HasApiTokens;
 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -16,10 +17,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
 
+    // relationship between users and shipping address
+    public function addresses()
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    // relationship between users and verification token
     public function verificationTokens()
     {
         return $this->hasMany(emailVerification::class);
     }
+
+    // mark the email has verified in the users table
     public function markEmailAsVerified()
     {
         if (!is_null($this->verified_at)) {

@@ -96,4 +96,14 @@ class AuthController extends Controller
         // }
         // return response()->json(['message' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
     }
+
+    // public function getUser()
+    // {
+    //     $user = Auth::user();
+
+    //     return response([
+    //         'message' => 'Successfully fetched data ',
+    //         'data' => $user
+    //     ]);
+    // }
 }

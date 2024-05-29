@@ -28,7 +28,7 @@ class UpdateUserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone_number' => 'string|min:11',
-            'state' => 'json',
+            'state' => 'json|nullable',
             'home_address' => 'string|max:255',
         ]);
 
@@ -36,12 +36,7 @@ class UpdateUserController extends Controller
         $user = Auth::user();
 
         // Update user's name and other fields
-        $user->first_name = $request->input('first_name');
-        $user->last_name  = $request->input('last_name');
-        // $user->email = $request->input('email'); // Uncomment if you want to update email
-        $user->phone_number = $request->input('phone_number');
-        $user->state = $request->input('state');
-        $user->home_address = $request->input('home_address');
+        $user->update($request->all());
 
         // Save the updated user
         $user->save();
