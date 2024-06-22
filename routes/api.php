@@ -4,9 +4,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UpdateUserController;
+use App\Http\Controllers\UploadFeatureController;
+use App\Http\Controllers\UploadProductController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\UploadCategoryController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\EmailVerificationController;
 
@@ -28,6 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/addresses/{id}/set_address_toDefault', [ShippingAddressController::class, 'set_address_toDefault']);
     Route::delete('/Delete_address/{id}', [ShippingAddressController::class, 'Delete_address']);
     Route::get('/default-address', [ShippingAddressController::class, 'getDefaultAddress']);
+    Route::post('/UploadCategory', [UploadCategoryController::class, 'UploadCategory']);
+    Route::post('/UploadFeature', [UploadFeatureController::class, 'UploadFeature']);
+    Route::post('/UploadProduct', [UploadProductController::class, 'UploadProduct']);
+
 
     // Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('http://localhost:5173/email-verified');
 });
@@ -38,3 +47,7 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_passwo
 Route::post('/reset_password', [ForgotPasswordController::class, 'reset_password']);
 Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
+Route::get('/get_product_feature', [UploadFeatureController::class, 'get_product_feature']);
+Route::get('/get_product_category', [UploadCategoryController::class, 'get_product_category']);
+Route::get('/get_featured_product', [ProductController::class, 'get_featured_product']);
+Route::get('/new_arrival', [ProductController::class, 'new_arrival']);
