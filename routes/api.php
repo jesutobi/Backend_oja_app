@@ -51,3 +51,4 @@ Route::get('/get_product_feature', [UploadFeatureController::class, 'get_product
 Route::get('/get_product_category', [UploadCategoryController::class, 'get_product_category']);
 Route::get('/get_featured_product', [ProductController::class, 'get_featured_product']);
 Route::get('/new_arrival', [ProductController::class, 'new_arrival']);
+Route::get('/get_product_detail/{id}', [ProductController::class, 'get_product_detail']);

@@ -15,10 +15,15 @@ class ProductController extends Controller
     }
     public function new_arrival()
     {
-        $dateThreshold = now()->subDays(1);
+        $dateThreshold = now()->subDays(10);
 
         $new_arrival = Product::where('created_at', '>=', $dateThreshold)->with('images')->get();
 
         return response()->json(['message' => 'new arrival successfully fetched', 'data' => $new_arrival]);
+    }
+    public function get_product_detail($id)
+    {
+        $product_detail = Product::with('images')->findOrFail($id);
+        return response()->json(['message' => 'Successfully fetched product detail', 'data' => $product_detail]);
     }
 }
