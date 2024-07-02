@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\ProductReview;
 use App\Models\ShippingAddress;
-use App\Models\emailVerification;
 
+use App\Models\emailVerification;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,6 +17,11 @@ class User extends Authenticatable implements MustVerifyEmail
 {
 
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
 
     // relationship between users and shipping address
     public function addresses()

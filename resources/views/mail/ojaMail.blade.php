@@ -363,7 +363,7 @@
                                                                     style="padding:0;Margin:0">
                                                                     <span class="msohide es-button-border"
                                                                         style="border-style:solid;border-color:#facc15;background:#facc15;border-width:3px;display:inline-block;border-radius:10px;width:auto;mso-hide:all">
-                                                                        <a href="http://localhost:5173/email-verified?id={{ $data['user_data']->id }}&token={{ $data['hashedToken'] }}"
+                                                                        <a href="http://localhost:5173/auth/email-verified?id={{ $data['user_data']->id }}&token={{ $data['hashedToken'] }}"
     class="es-button msohide es-button-1714161582784" target="_blank"
     style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#333333;font-size:18px;display:inline-block;background:#facc15;border-radius:10px;font-family:'courier new', courier, 'lucida sans typewriter', 'lucida typewriter', monospace;font-weight:bold;font-style:normal;line-height:22px;width:auto;text-align:center;padding:7px 65px;mso-padding-alt:0;mso-border-alt:10px solid #facc15;mso-hide:all">
     Verify Email
@@ -413,7 +413,7 @@
                                                                     </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'courier new', courier, 'lucida sans typewriter', 'lucida typewriter', monospace;line-height:21px;color:#333333;font-size:14px">
-                                                                        http://localhost:5173/email-verified?id={{ $data['user_data']->id }}&token={{ $data['hashedToken'] }}
+                                                                        http://localhost:5173/auth/email-verified?id={{ $data['user_data']->id }}&token={{ $data['hashedToken'] }}
                                                                     </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'courier new', courier, 'lucida sans typewriter', 'lucida typewriter', monospace;line-height:21px;color:#333333;font-size:14px">

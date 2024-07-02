@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/UploadCategory', [UploadCategoryController::class, 'UploadCategory']);
     Route::post('/UploadFeature', [UploadFeatureController::class, 'UploadFeature']);
     Route::post('/UploadProduct', [UploadProductController::class, 'UploadProduct']);
+    Route::post('/post_product_review/{id}', [ProductController::class, 'post_product_review']);
 
 
     // Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('http://localhost:5173/email-verified');
@@ -52,3 +53,5 @@ Route::get('/get_product_category', [UploadCategoryController::class, 'get_produ
 Route::get('/get_featured_product', [ProductController::class, 'get_featured_product']);
 Route::get('/new_arrival', [ProductController::class, 'new_arrival']);
 Route::get('/get_product_detail/{id}', [ProductController::class, 'get_product_detail']);
+Route::get('/get_product_review/{id}', [ProductController::class, 'get_product_review']);
+Route::get('/get_similar_products/{id}', [ProductController::class, 'get_similar_products']);
