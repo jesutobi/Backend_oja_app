@@ -87,7 +87,7 @@ class ShippingAddressController extends Controller
 
 
         return response([
-            'message' => 'Set as default ',
+            'message' => 'Set as default address ',
 
         ]);
     }
