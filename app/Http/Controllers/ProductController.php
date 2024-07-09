@@ -17,7 +17,7 @@ class ProductController extends Controller
     }
     public function new_arrival()
     {
-        $dateThreshold = now()->subDays(10);
+        $dateThreshold = now()->subDays(30);
 
         $new_arrival = Product::where('created_at', '>=', $dateThreshold)->with('images')->get();
 

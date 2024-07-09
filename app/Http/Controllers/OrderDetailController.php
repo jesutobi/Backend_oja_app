@@ -43,12 +43,10 @@ class OrderDetailController extends Controller
             ]);
         }
 
-
-        return
-            response()->json([
-                'message' => 'Your order has been placed',
-                'orderItem' => $orderItem,
-                'order' => $order
-            ], 201);
+        return response()->json([
+            'message' => 'Your order has been placed',
+            'orderItem' => $orderItem,
+            'order' => $order
+        ], 201);
     }
 }
