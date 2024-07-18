@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrderItem;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderDetailController extends Controller
 {
@@ -37,7 +38,7 @@ class OrderDetailController extends Controller
 
         foreach ($request->order_items as $product) {
             $orderItem =  OrderItem::create([
-                'order_details_id' => $order->id,
+                'order_detail_id' => $order->id,
                 'product_id' => $product['id'],
                 'product_quantity' => $product['quantity'],
             ]);
@@ -48,5 +49,24 @@ class OrderDetailController extends Controller
             'orderItem' => $orderItem,
             'order' => $order
         ], 201);
+    }
+
+    public function get_all_orders()
+    {
+        $user_orders = Auth::user()->orders()->with(['orderItems.product.images'])->get();
+
+        return response([
+            'message' => 'Successfully fetched data ',
+            'data' => $user_orders
+        ]);
+    }
+    public function get_order_detail($id)
+    {
+        $user_orders = Auth::user()->orders()->with(['orderItems.product.images', 'orderAddress'])->findOrFail($id);
+
+        return response([
+            'message' => 'Successfully fetched single data ',
+            'data' => $user_orders
+        ]);
     }
 }

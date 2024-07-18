@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UpdateUserController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\SaveProductController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\UploadFeatureController;
 use App\Http\Controllers\UploadProductController;
@@ -42,9 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/post_product_review/{id}', [ProductController::class, 'post_product_review']);
     Route::post('/place_order', [OrderDetailController::class, 'place_order']);
     Route::post('/payment_details', [PaymentDetailController::class, 'payment_details']);
-
-
-    // Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('http://localhost:5173/email-verified');
+    Route::get('/get_all_orders', [OrderDetailController::class, 'get_all_orders']);
+    Route::get('/get_order_detail/{id}', [OrderDetailController::class, 'get_order_detail']);
+    Route::post('/save_product', [SaveProductController::class, 'save_product']);
+    Route::get('/get_saved_product/{id}', [SaveProductController::class, 'get_saved_product']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);

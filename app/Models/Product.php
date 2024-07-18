@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SaveProduct;
 use App\Models\ProductImage;
 use App\Models\ProductReview;
 use Illuminate\Database\Eloquent\Model;
@@ -23,5 +24,13 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(ProductReview::class);
+    }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function savedItems()
+    {
+        return $this->hasMany(SaveProduct::class);
     }
 }
