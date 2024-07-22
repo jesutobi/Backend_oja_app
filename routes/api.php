@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment_details', [PaymentDetailController::class, 'payment_details']);
     Route::get('/get_all_orders', [OrderDetailController::class, 'get_all_orders']);
     Route::get('/get_order_detail/{id}', [OrderDetailController::class, 'get_order_detail']);
+    Route::delete('/delete_orders/{id}', [OrderDetailController::class, 'delete_orders']);
     Route::post('/save_product', [SaveProductController::class, 'save_product']);
     Route::get('/get_saved_product/{id}', [SaveProductController::class, 'get_saved_product']);
 });
@@ -63,3 +64,4 @@ Route::get('/get_product_detail/{id}', [ProductController::class, 'get_product_d
 Route::get('/get_product_review/{id}', [ProductController::class, 'get_product_review']);
 Route::get('/get_similar_products/{id}', [ProductController::class, 'get_similar_products']);
 Route::get('/get_states', [StatesController::class, 'get_states']);
+Route::get('/get_Products_By_Category/{id}', [UploadCategoryController::class, 'get_Products_By_Category']);

@@ -19,6 +19,7 @@ class UploadProductController extends Controller
             'product_quantity' => 'required|string',
             'product_brand' => 'required|string',
             'product_category' => 'required|json',
+            'category_id' => 'required|integer',
             'featured' => 'boolean',
             'selected_product_feature' => 'required|json',
             'product_images' => 'required|array',
@@ -36,6 +37,7 @@ class UploadProductController extends Controller
             'product_quantity' => $data['product_quantity'],
             'product_brand' => $data['product_brand'],
             'product_category' => $data['product_category'],
+            'category_id' => $data['category_id'],
             'featured' => $data['featured'],
             'selected_product_feature' => $data['selected_product_feature'],
         ]);

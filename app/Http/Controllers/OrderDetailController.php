@@ -69,4 +69,27 @@ class OrderDetailController extends Controller
             'data' => $user_orders
         ]);
     }
+
+    public function delete_orders($id)
+    {
+        // Retrieve the user order
+        $user_orders = Auth::user()->orders()->with(['orderItems.product.images', 'orderAddress'])->findOrFail($id);
+
+        // Delete related order items
+        if ($user_orders->payment_status === 'unpaid') {
+            // foreach ($user_orders->orderItems as $orderItem) {
+
+            $user_orders->delete();
+            // }
+        } else {
+            return response([
+                'message' => 'You can only delete unpaid orders '
+            ]);
+        }
+
+
+        return response([
+            'message' => 'Deleted successfully '
+        ]);
+    }
 }
