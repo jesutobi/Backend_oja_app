@@ -65,10 +65,10 @@ class ProductController extends Controller
         }
 
         // Fetch related products based on the same category title
-        $categoryTitle = $product->product_category['category_title'];
+        $categoryId = $product->category_id;
 
         $relatedProducts = Product::with('images')
-            ->where('product_category->category_title', $categoryTitle) // Access JSON key
+            ->where('category_id', $categoryId) // Access JSON key
             ->where('id', '!=', $id) // Exclude the current product
             ->get();
         return response()->json(['message' => 'Successfully fetched related products', 'data' => $relatedProducts]);

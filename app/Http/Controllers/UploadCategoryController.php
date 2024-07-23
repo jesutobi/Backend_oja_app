@@ -45,7 +45,7 @@ class UploadCategoryController extends Controller
     public function get_Products_By_Category($id)
     {
         $category = productCategory::findOrFail($id);
-        $products = $category->products()->with('images')->paginate(15);
+        $products = $category->products()->with('images')->paginate(10);
         return response()->json(['category' => $category, 'products_by_category' => $products], 200);
     }
 }
