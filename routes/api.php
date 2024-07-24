@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\findcontroller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\ProductController;
@@ -65,3 +66,4 @@ Route::get('/get_product_review/{id}', [ProductController::class, 'get_product_r
 Route::get('/get_similar_products/{id}', [ProductController::class, 'get_similar_products']);
 Route::get('/get_states', [StatesController::class, 'get_states']);
 Route::get('/get_Products_By_Category/{id}', [UploadCategoryController::class, 'get_Products_By_Category']);
+Route::get('/search', [findcontroller::class, 'search']);
