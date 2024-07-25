@@ -67,3 +67,4 @@ Route::get('/get_similar_products/{id}', [ProductController::class, 'get_similar
 Route::get('/get_states', [StatesController::class, 'get_states']);
 Route::get('/get_Products_By_Category/{id}', [UploadCategoryController::class, 'get_Products_By_Category']);
 Route::get('/search', [findcontroller::class, 'search']);
+Route::get('/search_Products_By_Category/{id}', [findcontroller::class, 'search_Products_By_Category']);

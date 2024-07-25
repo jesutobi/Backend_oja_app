@@ -46,6 +46,6 @@ class UploadCategoryController extends Controller
     {
         $category = productCategory::findOrFail($id);
         $products = $category->products()->with('images')->paginate(10);
-        return response()->json(['category' => $category, 'products_by_category' => $products], 200);
+        return response()->json(['category' => $category, 'products' => $products], 200);
     }
 }
