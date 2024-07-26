@@ -25,7 +25,7 @@ class ProductController extends Controller
     }
     public function get_product_detail($id)
     {
-        $product_detail = Product::with('images')->findOrFail($id);
+        $product_detail = Product::with('images', 'savedItems')->findOrFail($id);
         return response()->json(['message' => 'Successfully fetched product detail', 'data' => $product_detail]);
     }
 
