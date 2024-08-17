@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 // use App\Http\Requests\ResetPasswordRequest;
 
@@ -19,13 +20,32 @@ class ForgotPasswordController extends Controller
 
     public function forgot_password(Request $request)
     {
-        $data = $request->validate(['email' => 'required|email']);
+        try {
+            $data = $request->validate(['email' => 'required|email']);
 
-        Password::sendResetLink(
-            $data
-        );
+            Password::sendResetLink(
+                $data
+            );
 
-        return response()->json(['message' => 'Reset password link has been sent to your email address'], Response::HTTP_OK);
+            return response()->json(['message' => 'Reset password link has been sent to your email address'], Response::HTTP_OK);
+        } catch (ValidationException $e) {
+
+            return response()->json(
+                [
+                    'message' => 'Validation errors',
+                    'errors' => $e->errors(),
+                ],
+                422
+            );
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'message' => 'An error occurred during this process',
+                ],
+                500
+            );
+        }
     }
     public function reset_password(Request $request)
     {

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\Rules\Password;
 use App\Services\EmailVerificationService;
+use Illuminate\Validation\ValidationException;
 
 
 
@@ -18,68 +19,96 @@ use App\Services\EmailVerificationService;
 class AuthController extends Controller
 {
     //
-    public function  register(Request $request)
+    public function register(Request $request)
     {
-        $data = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'agree_terms_conditions' => 'required|boolean',
-            'email' => 'required|email|string|unique:users,email',
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()],
+        try {
+            $data = $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'agree_terms_conditions' => 'required|boolean',
+                'email' => 'required|email|string|unique:users,email',
+                'password' => ['required', Password::min(8)->mixedCase()->numbers()],
+            ]);
 
-        ]);
+            // Create the user
+            $user = User::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'agree_terms_conditions' => $data['agree_terms_conditions'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
 
-        /** @var \App\Models\User $user */
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'agree_terms_conditions' => $data['agree_terms_conditions'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-        $token = $user->createToken('main')->plainTextToken;
+            $token = $user->createToken('main')->plainTextToken;
 
-        EmailVerificationService::sendVerificationEmail($user);
+            // Send verification email
+            EmailVerificationService::sendVerificationEmail($user);
 
-        $userVerfied =
-            User::find($user->id);
+            return response()->json(
+                [
+                    'user' => $user,
+                    'message' => 'User created successfully. Please check your email to verify your account.',
+                    'token' => $token,
+                ],
+                201
+            ); // 201 Created
 
-        return response([
-            'user' => $user,
-            'verified' => $userVerfied,
-            'message' => 'User Created Successfully',
-            'token' => $token
-        ]);
-        // Send verification email
+        } catch (ValidationException $e) {
 
+            return response()->json(
+                [
+                    'message' => 'Validation errors',
+                    'errors' => $e->errors(),
+                ],
+                422
+            );
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'message' => 'An error occurred during registration. Please try again later.',
+                ],
+                500
+            );
+        }
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        try {
+            $credentials = $request->validate([
 
-            'email' => 'required|email|string|exists:users,email',
-            'password' => [
-                'required',
-            ],
+                'email' => 'required|email|string|exists:users,email',
+                'password' => [
+                    'required',
+                ],
 
-        ]);
+            ]);
 
-        if (!Auth::attempt($credentials)) {
+            if (!Auth::attempt($credentials)) {
+                return response([
+                    'error' => 'The Provided credentials are not correct'
+                ], 422);
+            }
+
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            $token = $user->createToken('main')->plainTextToken;
+
             return response([
-                'error' => 'The Provided credentials are not correct'
-            ], 422);
+                'message' => 'User Logged In Successfully',
+                'user' => $user,
+                'token' => $token
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'message' => 'An error occurred while logging in, please try again',
+                ],
+                500
+            );
         }
-
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
-
-        return response([
-            'message' => 'User Logged In Successfully',
-            'user' => $user,
-            'token' => $token
-        ]);
     }
 
     public function logout()
